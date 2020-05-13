@@ -2,7 +2,7 @@
 title: "Assignment 1"
 author: "Giulio Mario Martena"
 date: "5/12/2020"
-output: html_document
+output: md_document
 ---
 
 ```{r setup, include=FALSE}
@@ -133,7 +133,7 @@ Follows a comparison between weekdays and weekends:
 ```{r}
 intervalDT <- data[, lapply(.SD, mean, na.rm = TRUE),  .SDcols = 'steps', by = .(interval, `weekday`)]
 g <- ggplot(intervalDT, aes(x = interval, y = steps, color=`weekday`))
-g + geom_line() + labs(title = 'Avg. Daily Steps by Weektype', x = 'Interval', y = 'Steps') + facet_wrap(.~`weekday`, ncol = 1, nrow = 2)
+g + geom_line() + labs(title = 'Avg. Daily Steps by Weektype', x = 'Interval', y = 'Steps') + facet_wrap(.~`weekday`, ncol = 1, nrow = 2) + theme_minimal()
 ```
 
 
