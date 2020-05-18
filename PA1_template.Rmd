@@ -2,7 +2,7 @@
 title: "Assignment 1"
 author: "Giulio Mario Martena"
 date: "5/12/2020"
-output: md_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -92,10 +92,11 @@ The total number of rows with NAs is:
 data[is.na(steps), .N] # Selecting rows with NAs and generating a col with the counting
 ```
 
-In absence of better ideas, NAs will be filled with the median:
+Imputing NAs with the mean of the specific interval:
 
 ```{r}
-data[is.na(steps), 'steps'] <- data[, lapply(.SD, median, na.rm = TRUE), .SDcols = 'steps']
+data$steps <- ave(data$steps, data$interval, FUN = function(x) ifelse(is.na(x), mean(x, na.rm = TRUE), x))
+head(data$steps)
 ```
 
 A new dataset can be created from the last operation:

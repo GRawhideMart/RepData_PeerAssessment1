@@ -123,7 +123,7 @@ The total number of rows with NAs is:
 
 In absence of better ideas, NAs will be filled with the median:
 
-    data[is.na(steps), 'steps'] <- data[, lapply(.SD, median, na.rm = TRUE), .SDcols = 'steps']
+    data$steps <- ave(data$steps, data$interval, FUN = function(x) ifelse(is.na(x), mean(x, na.rm = TRUE), x))
 
 A new dataset can be created from the last operation:
 
@@ -135,7 +135,7 @@ The same calculations and plots as before can be now made:
     stepsDT[,.(stepsMean = mean(steps, na.rm = TRUE), stepsMedian = median(steps, na.rm = TRUE))]
 
     ##    stepsMean stepsMedian
-    ## 1:   9354.23       10395
+    ## 1:  10766.19    10766.19
 
     g <- ggplot(stepsDT, aes(x = steps))
     g + geom_histogram(color='black', fill='brown', binwidth = 1000) + labs(x='Steps',y='Count',title='Steps per day') + theme_minimal()
